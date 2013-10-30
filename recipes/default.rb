@@ -1,5 +1,5 @@
-#
 # Cookbook Name:: yum-s3-plugin
+#
 # Recipe:: default
 #
 # Copyright (C) 2013 SinisterLight
@@ -21,6 +21,8 @@ temp_dir = Chef::Config['file_cache_path']
 execute 'git_clone_yum_s3_plugin' do
   command "git clone https://github.com/jbraeuer/yum-s3-plugin.git"
   creates "/#{temp_dir}/yum-s3-plugin"
+  cwd temp_dir
+  not_if { ::File.exists? "#{temp_dir}/yum-s3-plugin-master/RPMS/noarch/yum-s3-0.2.4-1.noarch.rpm"}
 end
 
 script 'install_yum_s3_plugin' do
