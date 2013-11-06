@@ -3,6 +3,7 @@ define :s3_repo do
     source "s3_repo.repo.erb"
     owner "root"
     group "root"
+    cookbook 'yum-s3-plugin'
     variables({
       :name => params[:name],
       :base_url => params[:bucket_url],
