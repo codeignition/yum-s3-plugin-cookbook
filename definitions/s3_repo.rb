@@ -7,8 +7,8 @@ define :s3_repo do
     variables({
       :name => params[:name],
       :base_url => params[:bucket_url],
-      :access_key_id => params['access_key'],
-      :secret_access_key => params['secret_key']
+      :access_key_id => params[:access_key],
+      :secret_access_key => params[:secret_key]
     })
   end
 end
