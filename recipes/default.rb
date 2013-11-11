@@ -22,13 +22,16 @@ execute 'git_clone_yum_s3_plugin' do
   command "git clone https://github.com/jbraeuer/yum-s3-plugin.git"
   creates "/#{temp_dir}/yum-s3-plugin"
   cwd temp_dir
-  not_if { ::File.exists? "#{temp_dir}/yum-s3-plugin-master/RPMS/noarch/yum-s3-0.2.4-1.noarch.rpm"}
+  not_if "rpm -qa | grep yum-s3-0.2.4-1.noarch"
 end
 
 script 'install_yum_s3_plugin' do
   interpreter '/bin/bash'
   cwd "/#{temp_dir}/yum-s3-plugin"
   code './package -d'
+  not_if "rpm -qa | grep yum-s3-0.2.4-1.noarch"
 end
 
-package "/#{temp_dir}/yum-s3-plugin/RPMS/noarch/yum-s3-0.2.4-1.noarch.rpm"
+package "/#{temp_dir}/yum-s3-plugin/RPMS/noarch/yum-s3-0.2.4-1.noarch.rpm" do
+  not_if "rpm -qa | grep yum-s3-0.2.4-1.noarch"
+end
